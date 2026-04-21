@@ -12,7 +12,9 @@ import SwiftData
 struct BadgerMeApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Badger.self,
+            EscalationLadder.self,
+            BadgerEvent.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -23,9 +25,27 @@ struct BadgerMeApp: App {
         }
     }()
 
+    private let notificationService = NotificationService.shared
+    @State private var badgerEngine: BadgerEngine?
+
+    init() {
+        AppSettings.registerDefaults()
+        notificationService.registerCategories()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .task {
+                    _ = await notificationService.requestPermissions()
+                }
+                .onAppear {
+                    if badgerEngine == nil {
+                        let context = sharedModelContainer.mainContext
+                        badgerEngine = BadgerEngine(modelContext: context)
+                    }
+                }
+                .environment(badgerEngine)
         }
         .modelContainer(sharedModelContainer)
     }

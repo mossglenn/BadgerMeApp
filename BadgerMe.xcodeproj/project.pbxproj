@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A23751332F97F8DB00569AF5 /* BADGERME-SPEC.md in Resources */ = {isa = PBXBuildFile; fileRef = A23751322F97F8DA00569AF5 /* BADGERME-SPEC.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		A23751162F97F6FC00569AF5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		A23751062F97F6F700569AF5 /* BadgerMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BadgerMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A23751152F97F6FC00569AF5 /* BadgerMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BadgerMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A237511F2F97F6FC00569AF5 /* BadgerMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BadgerMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A23751322F97F8DA00569AF5 /* BADGERME-SPEC.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "BADGERME-SPEC.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -79,6 +84,7 @@
 				A23751182F97F6FC00569AF5 /* BadgerMeTests */,
 				A23751222F97F6FC00569AF5 /* BadgerMeUITests */,
 				A23751072F97F6F700569AF5 /* Products */,
+				A23751322F97F8DA00569AF5 /* BADGERME-SPEC.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -212,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A23751332F97F8DB00569AF5 /* BADGERME-SPEC.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
