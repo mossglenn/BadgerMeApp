@@ -52,6 +52,7 @@ struct BadgerMeApp: App {
                         let context = sharedModelContainer.mainContext
                         let engine = BadgerEngine(modelContext: context)
                         engine.watchService = watchService
+                        engine.remindersService = remindersService
                         watchService.onWatchAction = { action in
                             await engine.handleWatchAction(action)
                         }

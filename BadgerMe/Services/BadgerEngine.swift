@@ -16,6 +16,7 @@ final class BadgerEngine {
     private let modelContext: ModelContext
     private let notificationService: NotificationService
     var watchService: WatchConnectivityService?
+    var remindersService: RemindersService?
 
     // MARK: - Observable State
 
@@ -91,6 +92,13 @@ final class BadgerEngine {
 
         logEvent(for: badger, type: .completed)
         notificationService.cancelAll(for: badger.id)
+
+        // Sync completion back to Apple Reminders if this Badger originated from one
+        if badger.sourceType == .reminders,
+           let identifier = badger.sourceIdentifier {
+            try? await remindersService?.markComplete(reminderIdentifier: identifier)
+        }
+
         refreshBadgers()
     }
 
