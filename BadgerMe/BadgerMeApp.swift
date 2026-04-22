@@ -29,6 +29,8 @@ struct BadgerMeApp: App {
     }()
 
     private let notificationService = NotificationService.shared
+    private let watchService = WatchConnectivityService()
+    private let webhookServer = WebhookServer()
     @State private var badgerEngine: BadgerEngine?
     @State private var remindersService = RemindersService()
     @Environment(\.scenePhase) private var scenePhase
@@ -48,15 +50,28 @@ struct BadgerMeApp: App {
                 .onAppear {
                     if badgerEngine == nil {
                         let context = sharedModelContainer.mainContext
-                        badgerEngine = BadgerEngine(modelContext: context)
+                        let engine = BadgerEngine(modelContext: context)
+                        engine.watchService = watchService
+                        watchService.onWatchAction = { action in
+                            await engine.handleWatchAction(action)
+                        }
+                        watchService.activate()
+                        badgerEngine = engine
+
+                        // Start webhook server if enabled
+                        startWebhookIfEnabled(engine: engine)
                     }
                 }
                 .onChange(of: scenePhase) { _, newPhase in
                     switch newPhase {
                     case .active:
                         pollRemindersIfEnabled()
+                        if let engine = badgerEngine {
+                            startWebhookIfEnabled(engine: engine)
+                        }
                     case .background:
                         scheduleBackgroundRefresh()
+                        webhookServer.stop()
                     default:
                         break
                     }
@@ -133,6 +148,31 @@ struct BadgerMeApp: App {
             try BGTaskScheduler.shared.submit(request)
         } catch {
             print("Failed to schedule background refresh: \(error)")
+        }
+    }
+
+    // MARK: - Webhook Server
+
+    private func startWebhookIfEnabled(engine: BadgerEngine) {
+        guard UserDefaults.standard.bool(forKey: AppSettings.Key.webhookListenerEnabled) else {
+            webhookServer.stop()
+            return
+        }
+
+        let port = UserDefaults.standard.integer(forKey: AppSettings.Key.webhookPort)
+        guard port > 0 else { return }
+
+        webhookServer.onBadgerRequest = { request in
+            await engine.createBadger(
+                title: request.title,
+                notes: request.notes,
+                sourceType: .webhook,
+                sourceIdentifier: request.callbackURL?.absoluteString
+            )
+        }
+
+        if !webhookServer.isRunning {
+            webhookServer.start(port: UInt16(port))
         }
     }
 }

@@ -106,11 +106,23 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         let levels = ladder.levels.sorted { $0.order < $1.order }
         var cumulativeSeconds = 0
 
+        // Pre-render speech if any level uses speakText
+        var speechFilename: String?
+        let hasSpeakAction = levels.contains { level in
+            level.actions.contains { $0.type == .speakText }
+        }
+        if hasSpeakAction {
+            speechFilename = await SpeechService.shared.prerenderSpeech(
+                text: badger.title,
+                badgerId: badger.id
+            )
+        }
+
         for level in levels {
             let triggerDate = badger.startsAt.addingTimeInterval(TimeInterval(cumulativeSeconds))
             let identifier = notificationIdentifier(badgerId: badger.id, level: level.order)
 
-            let content = buildContent(for: badger, level: level, ladder: ladder)
+            let content = buildContent(for: badger, level: level, ladder: ladder, speechFilename: speechFilename)
 
             // Only schedule if the trigger date is in the future
             if triggerDate > Date() {
@@ -146,7 +158,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
-    /// Cancels all pending notifications for a specific Badger.
+    /// Cancels all pending notifications for a specific Badger and removes speech files.
     func cancelAll(for badgerId: UUID) {
         // Get all pending requests, filter by badger ID prefix, and remove them
         let prefix = "badger-\(badgerId.uuidString)"
@@ -156,6 +168,9 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
                 .filter { $0.hasPrefix(prefix) }
             self?.center.removePendingNotificationRequests(withIdentifiers: matchingIds)
         }
+
+        // Clean up pre-rendered speech audio
+        SpeechService.shared.removeSpeechFile(for: badgerId)
     }
 
     /// Reschedules a Badger's ladder after a snooze, starting from the given level.
@@ -172,13 +187,25 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
             .sorted { $0.order < $1.order }
             .filter { $0.order >= restartFromLevel }
 
+        // Pre-render speech if needed
+        var speechFilename: String?
+        let hasSpeakAction = levels.contains { level in
+            level.actions.contains { $0.type == .speakText }
+        }
+        if hasSpeakAction {
+            speechFilename = await SpeechService.shared.prerenderSpeech(
+                text: badger.title,
+                badgerId: badger.id
+            )
+        }
+
         var cumulativeSeconds = 0
 
         for level in levels {
             let triggerDate = snoozeUntil.addingTimeInterval(TimeInterval(cumulativeSeconds))
             let identifier = notificationIdentifier(badgerId: badger.id, level: level.order)
 
-            let content = buildContent(for: badger, level: level, ladder: ladder)
+            let content = buildContent(for: badger, level: level, ladder: ladder, speechFilename: speechFilename)
 
             let components = Calendar.current.dateComponents(
                 [.year, .month, .day, .hour, .minute, .second],
@@ -234,7 +261,8 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     private func buildContent(
         for badger: Badger,
         level: EscalationLevel,
-        ladder: EscalationLadder
+        ladder: EscalationLadder,
+        speechFilename: String? = nil
     ) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.categoryIdentifier = Category.badger
@@ -253,12 +281,18 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
             content.interruptionLevel = .active
         }
 
-        // Set sound from first sound action config
-        let soundAction = level.actions.first { $0.type == .sound }
-        if let soundName = soundAction?.config.soundName {
-            content.sound = UNNotificationSound(named: UNNotificationSoundName(soundName))
+        // Set sound: use pre-rendered speech file if this level has speakText,
+        // otherwise use configured sound or default
+        let hasSpeakAction = level.actions.contains { $0.type == .speakText }
+        if hasSpeakAction, let speechFilename {
+            content.sound = UNNotificationSound(named: UNNotificationSoundName(speechFilename))
         } else {
-            content.sound = .default
+            let soundAction = level.actions.first { $0.type == .sound }
+            if let soundName = soundAction?.config.soundName {
+                content.sound = UNNotificationSound(named: UNNotificationSoundName(soundName))
+            } else {
+                content.sound = .default
+            }
         }
 
         // Carry Badger metadata in userInfo for stateless response handling

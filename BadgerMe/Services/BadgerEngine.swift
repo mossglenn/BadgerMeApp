@@ -15,6 +15,7 @@ final class BadgerEngine {
 
     private let modelContext: ModelContext
     private let notificationService: NotificationService
+    var watchService: WatchConnectivityService?
 
     // MARK: - Observable State
 
@@ -31,6 +32,21 @@ final class BadgerEngine {
         }
 
         refreshBadgers()
+    }
+
+    // MARK: - Watch Action Handling
+
+    func handleWatchAction(_ action: WatchAction) async {
+        guard let badger = fetchBadger(by: action.badgerId) else { return }
+
+        switch action.type {
+        case .done:
+            await markDone(badger)
+        case .dismiss:
+            dismiss(badger)
+        case .snooze(let minutes):
+            await snooze(badger, durationMinutes: minutes)
+        }
     }
 
     // MARK: - Create
@@ -251,6 +267,8 @@ final class BadgerEngine {
             historyDescriptor.sortBy = [SortDescriptor(\.acknowledgedAt, order: .reverse)]
             historyDescriptor.fetchLimit = 50
             recentHistory = try modelContext.fetch(historyDescriptor)
+            // Sync active state to Watch
+            watchService?.sendActiveBadgers(activeBadgers + snoozedBadgers)
         } catch {
             print("Failed to fetch Badgers: \(error)")
         }

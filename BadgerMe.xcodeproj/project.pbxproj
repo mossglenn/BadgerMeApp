@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A23751332F97F8DB00569AF5 /* BADGERME-SPEC.md in Resources */ = {isa = PBXBuildFile; fileRef = A23751322F97F8DA00569AF5 /* BADGERME-SPEC.md */; };
+		A2A6375D2F985080002A6B8F /* BadgerMeWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A2A6373D2F98507F002A6B8F /* BadgerMeWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,7 +26,42 @@
 			remoteGlobalIDString = A23751052F97F6F700569AF5;
 			remoteInfo = BadgerMe;
 		};
+		A2A6374A2F985080002A6B8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A23750FE2F97F6F700569AF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2A6373C2F98507F002A6B8F;
+			remoteInfo = "BadgerMeWatch Watch App";
+		};
+		A2A637542F985080002A6B8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A23750FE2F97F6F700569AF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2A6373C2F98507F002A6B8F;
+			remoteInfo = "BadgerMeWatch Watch App";
+		};
+		A2A6375B2F985080002A6B8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A23750FE2F97F6F700569AF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2A6373C2F98507F002A6B8F;
+			remoteInfo = "BadgerMeWatch Watch App";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A2A637612F985080002A6B8F /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				A2A6375D2F985080002A6B8F /* BadgerMeWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A23751062F97F6F700569AF5 /* BadgerMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BadgerMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,6 +69,9 @@
 		A237511F2F97F6FC00569AF5 /* BadgerMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BadgerMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A23751322F97F8DA00569AF5 /* BADGERME-SPEC.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "BADGERME-SPEC.md"; sourceTree = "<group>"; };
 		A2A637382F984D6E002A6B8F /* BadgerMe */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BadgerMe; sourceTree = "<group>"; };
+		A2A6373D2F98507F002A6B8F /* BadgerMeWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BadgerMeWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2A637492F985080002A6B8F /* BadgerMeWatch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BadgerMeWatch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2A637532F985080002A6B8F /* BadgerMeWatch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BadgerMeWatch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +83,21 @@
 		A23751222F97F6FC00569AF5 /* BadgerMeUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BadgerMeUITests;
+			sourceTree = "<group>";
+		};
+		A2A6373E2F98507F002A6B8F /* BadgerMeWatch Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "BadgerMeWatch Watch App";
+			sourceTree = "<group>";
+		};
+		A2A6374C2F985080002A6B8F /* BadgerMeWatch Watch AppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "BadgerMeWatch Watch AppTests";
+			sourceTree = "<group>";
+		};
+		A2A637562F985080002A6B8F /* BadgerMeWatch Watch AppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "BadgerMeWatch Watch AppUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -70,6 +124,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A2A6373A2F98507F002A6B8F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2A637462F985080002A6B8F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2A637502F985080002A6B8F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -79,6 +154,9 @@
 				A2A637382F984D6E002A6B8F /* BadgerMe */,
 				A23751182F97F6FC00569AF5 /* BadgerMeTests */,
 				A23751222F97F6FC00569AF5 /* BadgerMeUITests */,
+				A2A6373E2F98507F002A6B8F /* BadgerMeWatch Watch App */,
+				A2A6374C2F985080002A6B8F /* BadgerMeWatch Watch AppTests */,
+				A2A637562F985080002A6B8F /* BadgerMeWatch Watch AppUITests */,
 				A23751072F97F6F700569AF5 /* Products */,
 				A23751322F97F8DA00569AF5 /* BADGERME-SPEC.md */,
 			);
@@ -90,6 +168,9 @@
 				A23751062F97F6F700569AF5 /* BadgerMe.app */,
 				A23751152F97F6FC00569AF5 /* BadgerMeTests.xctest */,
 				A237511F2F97F6FC00569AF5 /* BadgerMeUITests.xctest */,
+				A2A6373D2F98507F002A6B8F /* BadgerMeWatch Watch App.app */,
+				A2A637492F985080002A6B8F /* BadgerMeWatch Watch AppTests.xctest */,
+				A2A637532F985080002A6B8F /* BadgerMeWatch Watch AppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -104,10 +185,12 @@
 				A23751022F97F6F700569AF5 /* Sources */,
 				A23751032F97F6F700569AF5 /* Frameworks */,
 				A23751042F97F6F700569AF5 /* Resources */,
+				A2A637612F985080002A6B8F /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A2A6375C2F985080002A6B8F /* PBXTargetDependency */,
 			);
 			name = BadgerMe;
 			packageProductDependencies = (
@@ -162,6 +245,74 @@
 			productReference = A237511F2F97F6FC00569AF5 /* BadgerMeUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		A2A6373C2F98507F002A6B8F /* BadgerMeWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2A6375E2F985080002A6B8F /* Build configuration list for PBXNativeTarget "BadgerMeWatch Watch App" */;
+			buildPhases = (
+				A2A637392F98507F002A6B8F /* Sources */,
+				A2A6373A2F98507F002A6B8F /* Frameworks */,
+				A2A6373B2F98507F002A6B8F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A2A6373E2F98507F002A6B8F /* BadgerMeWatch Watch App */,
+			);
+			name = "BadgerMeWatch Watch App";
+			packageProductDependencies = (
+			);
+			productName = "BadgerMeWatch Watch App";
+			productReference = A2A6373D2F98507F002A6B8F /* BadgerMeWatch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A2A637482F985080002A6B8F /* BadgerMeWatch Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2A637622F985080002A6B8F /* Build configuration list for PBXNativeTarget "BadgerMeWatch Watch AppTests" */;
+			buildPhases = (
+				A2A637452F985080002A6B8F /* Sources */,
+				A2A637462F985080002A6B8F /* Frameworks */,
+				A2A637472F985080002A6B8F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A2A6374B2F985080002A6B8F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A2A6374C2F985080002A6B8F /* BadgerMeWatch Watch AppTests */,
+			);
+			name = "BadgerMeWatch Watch AppTests";
+			packageProductDependencies = (
+			);
+			productName = "BadgerMeWatch Watch AppTests";
+			productReference = A2A637492F985080002A6B8F /* BadgerMeWatch Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A2A637522F985080002A6B8F /* BadgerMeWatch Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2A637652F985080002A6B8F /* Build configuration list for PBXNativeTarget "BadgerMeWatch Watch AppUITests" */;
+			buildPhases = (
+				A2A6374F2F985080002A6B8F /* Sources */,
+				A2A637502F985080002A6B8F /* Frameworks */,
+				A2A637512F985080002A6B8F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A2A637552F985080002A6B8F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A2A637562F985080002A6B8F /* BadgerMeWatch Watch AppUITests */,
+			);
+			name = "BadgerMeWatch Watch AppUITests";
+			packageProductDependencies = (
+			);
+			productName = "BadgerMeWatch Watch AppUITests";
+			productReference = A2A637532F985080002A6B8F /* BadgerMeWatch Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -183,6 +334,17 @@
 						CreatedOnToolsVersion = 26.4.1;
 						TestTargetID = A23751052F97F6F700569AF5;
 					};
+					A2A6373C2F98507F002A6B8F = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
+					A2A637482F985080002A6B8F = {
+						CreatedOnToolsVersion = 26.4.1;
+						TestTargetID = A2A6373C2F98507F002A6B8F;
+					};
+					A2A637522F985080002A6B8F = {
+						CreatedOnToolsVersion = 26.4.1;
+						TestTargetID = A2A6373C2F98507F002A6B8F;
+					};
 				};
 			};
 			buildConfigurationList = A23751012F97F6F700569AF5 /* Build configuration list for PBXProject "BadgerMe" */;
@@ -202,6 +364,9 @@
 				A23751052F97F6F700569AF5 /* BadgerMe */,
 				A23751142F97F6FC00569AF5 /* BadgerMeTests */,
 				A237511E2F97F6FC00569AF5 /* BadgerMeUITests */,
+				A2A6373C2F98507F002A6B8F /* BadgerMeWatch Watch App */,
+				A2A637482F985080002A6B8F /* BadgerMeWatch Watch AppTests */,
+				A2A637522F985080002A6B8F /* BadgerMeWatch Watch AppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -223,6 +388,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A237511D2F97F6FC00569AF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2A6373B2F98507F002A6B8F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2A637472F985080002A6B8F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2A637512F985080002A6B8F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,6 +439,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A2A637392F98507F002A6B8F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2A637452F985080002A6B8F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2A6374F2F985080002A6B8F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -265,6 +472,21 @@
 			isa = PBXTargetDependency;
 			target = A23751052F97F6F700569AF5 /* BadgerMe */;
 			targetProxy = A23751202F97F6FC00569AF5 /* PBXContainerItemProxy */;
+		};
+		A2A6374B2F985080002A6B8F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A2A6373C2F98507F002A6B8F /* BadgerMeWatch Watch App */;
+			targetProxy = A2A6374A2F985080002A6B8F /* PBXContainerItemProxy */;
+		};
+		A2A637552F985080002A6B8F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A2A6373C2F98507F002A6B8F /* BadgerMeWatch Watch App */;
+			targetProxy = A2A637542F985080002A6B8F /* PBXContainerItemProxy */;
+		};
+		A2A6375C2F985080002A6B8F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A2A6373C2F98507F002A6B8F /* BadgerMeWatch Watch App */;
+			targetProxy = A2A6375B2F985080002A6B8F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -542,6 +764,164 @@
 			};
 			name = Release;
 		};
+		A2A6375F2F985080002A6B8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D28SQQ935Q;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				INFOPLIST_KEY_CFBundleDisplayName = BadgerMeWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.amosglenn.BadgerMe;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amosglenn.BadgerMe.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Debug;
+		};
+		A2A637602F985080002A6B8F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D28SQQ935Q;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				INFOPLIST_KEY_CFBundleDisplayName = BadgerMeWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.amosglenn.BadgerMe;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amosglenn.BadgerMe.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Release;
+		};
+		A2A637632F985080002A6B8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D28SQQ935Q;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amosglenn.BadgerMeWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BadgerMeWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BadgerMeWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Debug;
+		};
+		A2A637642F985080002A6B8F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D28SQQ935Q;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amosglenn.BadgerMeWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BadgerMeWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BadgerMeWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Release;
+		};
+		A2A637662F985080002A6B8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D28SQQ935Q;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amosglenn.BadgerMeWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "BadgerMeWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Debug;
+		};
+		A2A637672F985080002A6B8F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D28SQQ935Q;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amosglenn.BadgerMeWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "BadgerMeWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -577,6 +957,33 @@
 			buildConfigurations = (
 				A23751302F97F6FC00569AF5 /* Debug */,
 				A23751312F97F6FC00569AF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A2A6375E2F985080002A6B8F /* Build configuration list for PBXNativeTarget "BadgerMeWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2A6375F2F985080002A6B8F /* Debug */,
+				A2A637602F985080002A6B8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A2A637622F985080002A6B8F /* Build configuration list for PBXNativeTarget "BadgerMeWatch Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2A637632F985080002A6B8F /* Debug */,
+				A2A637642F985080002A6B8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A2A637652F985080002A6B8F /* Build configuration list for PBXNativeTarget "BadgerMeWatch Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2A637662F985080002A6B8F /* Debug */,
+				A2A637672F985080002A6B8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
