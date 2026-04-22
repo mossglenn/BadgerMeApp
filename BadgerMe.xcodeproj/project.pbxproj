@@ -32,14 +32,10 @@
 		A23751152F97F6FC00569AF5 /* BadgerMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BadgerMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A237511F2F97F6FC00569AF5 /* BadgerMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BadgerMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A23751322F97F8DA00569AF5 /* BADGERME-SPEC.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "BADGERME-SPEC.md"; sourceTree = "<group>"; };
+		A2A637382F984D6E002A6B8F /* BadgerMe */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BadgerMe; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A23751082F97F6F700569AF5 /* BadgerMe */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BadgerMe;
-			sourceTree = "<group>";
-		};
 		A23751182F97F6FC00569AF5 /* BadgerMeTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BadgerMeTests;
@@ -80,7 +76,7 @@
 		A23750FD2F97F6F700569AF5 = {
 			isa = PBXGroup;
 			children = (
-				A23751082F97F6F700569AF5 /* BadgerMe */,
+				A2A637382F984D6E002A6B8F /* BadgerMe */,
 				A23751182F97F6FC00569AF5 /* BadgerMeTests */,
 				A23751222F97F6FC00569AF5 /* BadgerMeUITests */,
 				A23751072F97F6F700569AF5 /* Products */,
@@ -112,9 +108,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				A23751082F97F6F700569AF5 /* BadgerMe */,
 			);
 			name = BadgerMe;
 			packageProductDependencies = (
@@ -329,6 +322,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Badger​Me​/​Info​.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -387,6 +381,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Badger​Me​/​Info​.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -407,6 +402,7 @@
 				DEVELOPMENT_TEAM = D28SQQ935Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BadgerMe/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -439,6 +435,7 @@
 				DEVELOPMENT_TEAM = D28SQQ935Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BadgerMe/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

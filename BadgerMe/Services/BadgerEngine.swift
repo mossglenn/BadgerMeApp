@@ -133,6 +133,20 @@ final class BadgerEngine {
         refreshBadgers()
     }
 
+    // MARK: - Deduplication
+
+    /// Returns true if an active or snoozed Badger already exists for the given source identifier.
+    func hasBadger(forSourceIdentifier identifier: String) -> Bool {
+        let active = BadgerState.active
+        let snoozed = BadgerState.snoozed
+        let predicate = #Predicate<Badger> {
+            $0.sourceIdentifier == identifier &&
+            ($0.state == active || $0.state == snoozed)
+        }
+        let descriptor = FetchDescriptor(predicate: predicate)
+        return ((try? modelContext.fetch(descriptor))?.isEmpty == false)
+    }
+
     // MARK: - Edit & Delete
 
     func deleteBadger(_ badger: Badger) {

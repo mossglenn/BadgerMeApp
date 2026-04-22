@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import UserNotifications
+import EventKit
 
 struct SettingsView: View {
     @Environment(BadgerEngine.self) private var engine: BadgerEngine?
@@ -21,6 +22,8 @@ struct SettingsView: View {
     @State private var notificationStatus: UNAuthorizationStatus = .notDetermined
     @State private var snoozeDurations: [Int] = AppSettings.defaultSnoozeDurations
     @State private var defaultLadder: EscalationLadder?
+    @State private var remindersService = RemindersService()
+    @State private var selectedListIds: Set<String> = []
 
     var body: some View {
         Form {
@@ -37,6 +40,13 @@ struct SettingsView: View {
             defaultLadder = try? engine?.fetchDefaultLadder()
             if let saved = UserDefaults.standard.array(forKey: AppSettings.Key.snoozeDurations) as? [Int] {
                 snoozeDurations = saved
+            }
+            remindersService.checkAuthorizationStatus()
+            if remindersService.authorizationStatus == .fullAccess {
+                remindersService.loadAvailableLists()
+            }
+            if let saved = UserDefaults.standard.array(forKey: AppSettings.Key.reminderListIdentifiers) as? [String] {
+                selectedListIds = Set(saved)
             }
         }
     }
@@ -167,8 +177,45 @@ struct SettingsView: View {
     private var remindersSection: some View {
         Section {
             Toggle("Monitor Apple Reminders", isOn: $reminderPollingEnabled)
+                .onChange(of: reminderPollingEnabled) { _, enabled in
+                    if enabled {
+                        Task {
+                            let granted = await remindersService.requestAccess()
+                            if !granted {
+                                reminderPollingEnabled = false
+                            }
+                        }
+                    }
+                }
 
             if reminderPollingEnabled {
+                if remindersService.authorizationStatus == .fullAccess {
+                    if remindersService.availableLists.isEmpty {
+                        Text("No Reminder lists found")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ForEach(remindersService.availableLists) { list in
+                            Toggle(list.title, isOn: Binding(
+                                get: { selectedListIds.contains(list.identifier) },
+                                set: { isOn in
+                                    if isOn {
+                                        selectedListIds.insert(list.identifier)
+                                    } else {
+                                        selectedListIds.remove(list.identifier)
+                                    }
+                                    saveSelectedLists()
+                                }
+                            ))
+                        }
+                    }
+                } else if remindersService.authorizationStatus == .denied {
+                    Button("Grant Access in Settings") {
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                }
+
                 HStack {
                     Image(systemName: "info.circle")
                         .foregroundStyle(.secondary)
@@ -180,6 +227,10 @@ struct SettingsView: View {
         } header: {
             Text("Reminders Integration")
         }
+    }
+
+    private func saveSelectedLists() {
+        UserDefaults.standard.set(Array(selectedListIds), forKey: AppSettings.Key.reminderListIdentifiers)
     }
 
     // MARK: - Webhook
