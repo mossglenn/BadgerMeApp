@@ -173,6 +173,23 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         SpeechService.shared.removeSpeechFile(for: badgerId)
     }
 
+    /// Returns the set of pending notification level numbers for a given Badger.
+    /// Nuclear notifications (different ID format) are excluded.
+    func pendingLevels(for badgerId: UUID) async -> Set<Int> {
+        let prefix = "badger-\(badgerId.uuidString)-level-"
+        let requests = await center.pendingNotificationRequests()
+        var levels = Set<Int>()
+        for request in requests {
+            let id = request.identifier
+            if id.hasPrefix(prefix),
+               let levelString = id.split(separator: "-").last,
+               let level = Int(levelString) {
+                levels.insert(level)
+            }
+        }
+        return levels
+    }
+
     /// Reschedules a Badger's ladder after a snooze, starting from the given level.
     func rescheduleAfterSnooze(
         for badger: Badger,
@@ -230,12 +247,19 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     // MARK: - UNUserNotificationCenterDelegate
 
     /// Called when a notification is delivered while the app is in the foreground.
+    /// Invokes the `onNotificationPresented` callback to advance escalation level tracking.
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification
     ) async -> UNNotificationPresentationOptions {
+        let userInfo = notification.request.content.userInfo
+        await onNotificationPresented?(userInfo)
         return [.banner, .sound, .badge]
     }
+
+    /// Callback when a notification is presented in the foreground.
+    /// Used by BadgerEngine to advance the Badger's currentLevel.
+    var onNotificationPresented: (([AnyHashable: Any]) async -> Void)?
 
     /// Called when the user interacts with a notification (taps an action or the notification itself).
     /// The actual handling is delegated to BadgerEngine via a callback.

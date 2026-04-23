@@ -69,6 +69,10 @@ struct BadgerMeApp: App {
                         pollRemindersIfEnabled()
                         if let engine = badgerEngine {
                             startWebhookIfEnabled(engine: engine)
+                            // Sync escalation levels that may have fired while backgrounded
+                            Task {
+                                await engine.syncLevelsFromPendingNotifications()
+                            }
                         }
                     case .background:
                         scheduleBackgroundRefresh()

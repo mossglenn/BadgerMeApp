@@ -32,6 +32,10 @@ final class BadgerEngine {
             await self?.handleNotificationResponse(response)
         }
 
+        notificationService.onNotificationPresented = { [weak self] userInfo in
+            await self?.handleNotificationPresented(userInfo: userInfo)
+        }
+
         refreshBadgers()
     }
 
@@ -191,6 +195,11 @@ final class BadgerEngine {
 
         guard let badger = fetchBadger(by: badgerId) else { return }
 
+        // Advance level before processing the action so event logs capture accurate levelAtEvent
+        if let firedLevel = userInfo["level"] as? Int {
+            advanceLevel(for: badger, to: firedLevel)
+        }
+
         switch response.actionIdentifier {
         case NotificationService.Action.done:
             await markDone(badger)
@@ -213,6 +222,81 @@ final class BadgerEngine {
                let minutesString = response.actionIdentifier.split(separator: "_").last,
                let minutes = Int(minutesString) {
                 await snooze(badger, durationMinutes: minutes)
+            }
+        }
+    }
+
+    // MARK: - Level Tracking
+
+    /// Called when a notification fires while the app is in the foreground.
+    /// Advances the Badger's currentLevel to reflect the level that just fired.
+    private func handleNotificationPresented(userInfo: [AnyHashable: Any]) {
+        guard let badgerIdString = userInfo["badgerId"] as? String,
+              let badgerId = UUID(uuidString: badgerIdString),
+              let firedLevel = userInfo["level"] as? Int else {
+            return
+        }
+
+        guard let badger = fetchBadger(by: badgerId),
+              badger.state == .active else {
+            return
+        }
+
+        advanceLevel(for: badger, to: firedLevel)
+    }
+
+    /// Advances a Badger's currentLevel to reflect that the given level has fired.
+    /// Idempotent: no-op if currentLevel is already past the target.
+    /// Logs `.levelFired` events for each level that advanced.
+    private func advanceLevel(for badger: Badger, to firedLevel: Int) {
+        guard badger.state == .active else { return }
+        guard firedLevel >= badger.currentLevel else { return }
+
+        // Log .levelFired for each level from currentLevel through firedLevel
+        for level in badger.currentLevel...firedLevel {
+            logEvent(for: badger, type: .levelFired, notes: "Level \(level + 1) fired")
+        }
+
+        // Advance currentLevel past the fired level
+        badger.currentLevel = firedLevel + 1
+        saveContext()
+
+        // Check if all levels are exhausted with giveUp nuclear option
+        if let ladder = try? resolvedLadder(for: badger) {
+            if badger.currentLevel >= ladder.levels.count && ladder.nuclearOption == .giveUp {
+                badger.state = .abandoned
+                badger.acknowledgedAt = Date()
+                saveContext()
+                logEvent(for: badger, type: .abandoned, notes: "All levels exhausted")
+                notificationService.cancelAll(for: badger.id)
+            }
+        }
+
+        refreshBadgers()
+    }
+
+    /// Syncs currentLevel for all active Badgers by examining which notifications
+    /// are still pending. Catches up levels that fired while the app was backgrounded.
+    func syncLevelsFromPendingNotifications() async {
+        for badger in activeBadgers {
+            guard badger.state == .active else { continue }
+            guard let ladder = try? resolvedLadder(for: badger) else { continue }
+
+            let pendingLevels = await notificationService.pendingLevels(for: badger.id)
+            let totalLevels = ladder.levels.count
+
+            if pendingLevels.isEmpty {
+                // All level notifications have fired (nuclear may still be pending)
+                let lastLevel = totalLevels - 1
+                if lastLevel >= badger.currentLevel {
+                    advanceLevel(for: badger, to: lastLevel)
+                }
+            } else if let lowestPending = pendingLevels.min(), lowestPending > 0 {
+                // Everything below the lowest pending level has fired
+                let highestFired = lowestPending - 1
+                if highestFired >= badger.currentLevel {
+                    advanceLevel(for: badger, to: highestFired)
+                }
             }
         }
     }
