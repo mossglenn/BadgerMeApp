@@ -14,6 +14,7 @@ struct BadgerDetailView: View {
     @Environment(BadgerEngine.self) private var engine: BadgerEngine?
     @Environment(\.dismiss) private var dismiss
     @State private var showDeleteConfirmation = false
+    @State private var showingEdit = false
 
     private var badger: Badger? {
         engine?.activeBadgers.first { $0.id == badgerId }
@@ -31,6 +32,22 @@ struct BadgerDetailView: View {
         }
         .navigationTitle(badger?.title ?? "Detail")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if let badger, badger.state == .active || badger.state == .snoozed {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        showingEdit = true
+                    } label: {
+                        Text("Edit")
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $showingEdit) {
+            if let badger {
+                BadgerEditView(badger: badger)
+            }
+        }
     }
 
     // MARK: - Detail Content

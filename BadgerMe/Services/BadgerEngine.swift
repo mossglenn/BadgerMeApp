@@ -183,6 +183,28 @@ final class BadgerEngine {
 
     // MARK: - Edit & Delete
 
+    func updateBadger(_ badger: Badger, title: String, notes: String?, customLadder: EscalationLadder?) async {
+        let ladderChanged = badger.customLadder?.id != customLadder?.id
+
+        badger.title = title
+        badger.notes = notes
+        badger.customLadder = customLadder
+        saveContext()
+
+        if ladderChanged && badger.state == .active {
+            if let ladder = try? resolvedLadder(for: badger) {
+                try? await notificationService.rescheduleAfterSnooze(
+                    for: badger,
+                    ladder: ladder,
+                    restartFromLevel: badger.currentLevel,
+                    snoozeUntil: Date()
+                )
+            }
+        }
+
+        refreshBadgers()
+    }
+
     func deleteBadger(_ badger: Badger) {
         notificationService.cancelAll(for: badger.id)
         modelContext.delete(badger)
