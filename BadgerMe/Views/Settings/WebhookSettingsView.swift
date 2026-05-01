@@ -122,11 +122,16 @@ struct WebhookSettingsView: View {
         }
     }
 
-    // MARK: - Token Management (Keychain placeholder)
-    // Full Keychain implementation will be added with WebhookServer (Step 12)
+    // MARK: - Token Management (Keychain)
 
     private func loadToken() {
-        if let saved = UserDefaults.standard.string(forKey: "webhookAuthToken") {
+        // Migrate legacy UserDefaults token to Keychain
+        if let legacy = UserDefaults.standard.string(forKey: "webhookAuthToken") {
+            KeychainHelper.setString(legacy, forKey: "webhookAuthToken")
+            UserDefaults.standard.removeObject(forKey: "webhookAuthToken")
+        }
+
+        if let saved = KeychainHelper.string(forKey: "webhookAuthToken") {
             authToken = saved
         } else {
             regenerateToken()
@@ -135,7 +140,7 @@ struct WebhookSettingsView: View {
 
     private func regenerateToken() {
         authToken = UUID().uuidString
-        UserDefaults.standard.set(authToken, forKey: "webhookAuthToken")
+        KeychainHelper.setString(authToken, forKey: "webhookAuthToken")
         showingToken = true
     }
 }

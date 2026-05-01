@@ -37,7 +37,9 @@ struct BadgerMeApp: App {
 
     init() {
         AppSettings.registerDefaults()
-        notificationService.registerCategories()
+        let durations = UserDefaults.standard.array(forKey: AppSettings.Key.snoozeDurations) as? [Int]
+            ?? AppSettings.defaultSnoozeDurations
+        notificationService.registerCategories(snoozeDurations: durations)
         registerBackgroundTask()
     }
 

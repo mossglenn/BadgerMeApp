@@ -10,31 +10,43 @@ import SwiftUI
 struct BadgerListView: View {
     @Environment(BadgerEngine.self) private var engine: BadgerEngine?
     @State private var showingNewBadger = false
+    @State private var navigationPath = NavigationPath()
 
     var body: some View {
-        Group {
-            if let engine {
-                if engine.activeBadgers.isEmpty && engine.snoozedBadgers.isEmpty {
-                    emptyState
+        NavigationStack(path: $navigationPath) {
+            Group {
+                if let engine {
+                    if engine.activeBadgers.isEmpty && engine.snoozedBadgers.isEmpty {
+                        emptyState
+                    } else {
+                        badgerList(engine: engine)
+                    }
                 } else {
-                    badgerList(engine: engine)
-                }
-            } else {
-                ProgressView()
-            }
-        }
-        .navigationTitle("Active")
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    showingNewBadger = true
-                } label: {
-                    Label("New Badger", systemImage: "plus")
+                    ProgressView()
                 }
             }
+            .navigationTitle("Active")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        showingNewBadger = true
+                    } label: {
+                        Label("New Badger", systemImage: "plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $showingNewBadger) {
+                NewBadgerView()
+            }
+            .navigationDestination(for: UUID.self) { badgerId in
+                BadgerDetailView(badgerId: badgerId)
+            }
         }
-        .sheet(isPresented: $showingNewBadger) {
-            NewBadgerView()
+        .onChange(of: engine?.deepLinkBadgerId) { _, newId in
+            if let id = newId {
+                navigationPath = NavigationPath([id])
+                engine?.deepLinkBadgerId = nil
+            }
         }
     }
 
@@ -77,9 +89,6 @@ struct BadgerListView: View {
                     }
                 }
             }
-        }
-        .navigationDestination(for: UUID.self) { badgerId in
-            BadgerDetailView(badgerId: badgerId)
         }
     }
 

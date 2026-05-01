@@ -24,6 +24,12 @@ final class BadgerEngine {
     private(set) var snoozedBadgers: [Badger] = []
     private(set) var recentHistory: [Badger] = []
 
+    /// Set when a notification is tapped to trigger navigation to the Badger's detail view.
+    var deepLinkBadgerId: UUID?
+
+    /// User-facing error message. Set by services; cleared when the alert is dismissed.
+    var presentedError: String?
+
     init(modelContext: ModelContext, notificationService: NotificationService = .shared) {
         self.modelContext = modelContext
         self.notificationService = notificationService
@@ -208,9 +214,8 @@ final class BadgerEngine {
             dismiss(badger)
 
         case UNNotificationDefaultActionIdentifier:
-            // User tapped the notification itself (not an action button)
-            // No state change — the app will open to show the Badger
-            break
+            // User tapped the notification itself — navigate to the Badger
+            deepLinkBadgerId = badgerId
 
         case UNNotificationDismissActionIdentifier:
             // User swiped away the notification — treat as ignored, no state change
@@ -362,7 +367,7 @@ final class BadgerEngine {
             // Sync active state to Watch
             watchService?.sendActiveBadgers(activeBadgers + snoozedBadgers)
         } catch {
-            print("Failed to fetch Badgers: \(error)")
+            presentedError = "Failed to load Badgers. Try restarting the app."
         }
     }
 
@@ -403,7 +408,7 @@ final class BadgerEngine {
         do {
             try modelContext.save()
         } catch {
-            print("Failed to save context: \(error)")
+            presentedError = "Failed to save changes. Your latest action may not persist."
         }
     }
 

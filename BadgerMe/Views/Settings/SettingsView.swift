@@ -107,25 +107,26 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Default Ladder
+    // MARK: - Ladders
 
     private var defaultLadderSection: some View {
         Section {
-            if let defaultLadder {
-                NavigationLink {
-                    LadderEditorView(ladder: defaultLadder)
-                } label: {
-                    EscalationLadderPreview(ladder: defaultLadder)
-                }
-            } else {
-                Button("Create Default Ladder") {
-                    defaultLadder = try? engine?.fetchDefaultLadder()
+            NavigationLink {
+                LadderListView()
+            } label: {
+                HStack {
+                    Label("Escalation Ladders", systemImage: "ladder")
+                    Spacer()
+                    if let defaultLadder {
+                        Text(defaultLadder.name)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
         } header: {
-            Text("Default Escalation Ladder")
+            Text("Escalation Ladders")
         } footer: {
-            Text("New Badgers use this ladder unless overridden.")
+            Text("Manage your escalation ladders. The default ladder is used for new Badgers unless overridden.")
         }
     }
 

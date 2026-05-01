@@ -145,7 +145,7 @@ final class WebhookServer {
         }
 
         // Validate auth token
-        let storedToken = UserDefaults.standard.string(forKey: "webhookAuthToken") ?? ""
+        let storedToken = KeychainHelper.string(forKey: "webhookAuthToken") ?? ""
         guard request.token == storedToken, !storedToken.isEmpty else {
             sendResponse(connection: connection, status: 401, body: ["error": "Invalid or missing auth token"])
             return

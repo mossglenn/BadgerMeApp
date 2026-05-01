@@ -81,6 +81,27 @@ struct LadderEditorView: View {
         }
         .navigationTitle(ladder.name.isEmpty ? "Edit Ladder" : ladder.name)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .secondaryAction) {
+                Button {
+                    duplicateLadder()
+                } label: {
+                    Label("Duplicate Ladder", systemImage: "doc.on.doc")
+                }
+            }
+        }
+    }
+
+    private func duplicateLadder() {
+        let copy = EscalationLadder(
+            name: "\(ladder.name) Copy",
+            levels: ladder.levels,
+            nuclearOption: ladder.nuclearOption,
+            maxSnoozeCount: ladder.maxSnoozeCount,
+            snoozeRestartLevel: ladder.snoozeRestartLevel
+        )
+        modelContext.insert(copy)
+        try? modelContext.save()
     }
 
     /// Indices into ladder.levels sorted by their order property.

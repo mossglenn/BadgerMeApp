@@ -6,15 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NewBadgerView: View {
     @Environment(BadgerEngine.self) private var engine: BadgerEngine?
     @Environment(\.dismiss) private var dismiss
+    @Query(sort: \EscalationLadder.name) private var ladders: [EscalationLadder]
 
     @State private var title = ""
     @State private var notes = ""
     @State private var startsAt = Date()
     @State private var startNow = true
+    @State private var selectedLadderId: UUID?
 
     var body: some View {
         NavigationStack {
@@ -40,13 +43,13 @@ struct NewBadgerView: View {
                     }
                 }
 
-                Section {
-                    HStack {
-                        Image(systemName: "ladder")
-                        Text("Uses default escalation ladder")
-                            .foregroundStyle(.secondary)
+                Section("Escalation Ladder") {
+                    Picker("Ladder", selection: $selectedLadderId) {
+                        Text("Default").tag(nil as UUID?)
+                        ForEach(ladders) { ladder in
+                            Text(ladder.name).tag(ladder.id as UUID?)
+                        }
                     }
-                    .font(.subheadline)
                 }
             }
             .navigationTitle("New Badger")
@@ -71,12 +74,14 @@ struct NewBadgerView: View {
     private func createBadger() {
         let effectiveStart = startNow ? Date() : startsAt
         let trimmedNotes = notes.trimmingCharacters(in: .whitespaces)
+        let customLadder = ladders.first { $0.id == selectedLadderId }
 
         Task {
             await engine?.createBadger(
                 title: title.trimmingCharacters(in: .whitespaces),
                 notes: trimmedNotes.isEmpty ? nil : trimmedNotes,
-                startsAt: effectiveStart
+                startsAt: effectiveStart,
+                customLadder: customLadder
             )
             dismiss()
         }
